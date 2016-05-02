@@ -6,7 +6,7 @@
 
 #define INF 1000000
 
-
+//récupération des metadata du graphe
 GRAPHE graphedata(FILE* fichier)
 {
 	GRAPHE graphe;
