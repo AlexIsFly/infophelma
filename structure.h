@@ -44,6 +44,16 @@ typedef struct graphe {
 #endif
 
 
+#ifndef _WAY
+#define _WAY
+
+typedef struct way
+{
+	int bestdad;
+	double weight;
+} CHEMIN, *WAY;
+
+#endif
 //Structure pour liste chaînée
 // typedef struct graphe_liste {
 // 	double cout;

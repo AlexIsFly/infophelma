@@ -4,5 +4,5 @@
 
 GRAPHE graphedata(FILE* fichier);
 GLISTE* build_matrix(FILE* fichier, GRAPHE graphe);
-double* recherche(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s);
+WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s);
 

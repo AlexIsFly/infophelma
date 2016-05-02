@@ -38,30 +38,34 @@ GLISTE* build_matrix(FILE* fichier, GRAPHE graphe)
 }
 
 
-double* recherche(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
+WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 
 
 	//Initialisation du tableau
 	int nbre_smt = graphe.nombre_sommet;
 	int nbre_arc = graphe.nombre_arc;
-	double* tab = calloc(nbre_smt, sizeof(double));
+	WAY tab = calloc(nbre_smt, sizeof(CHEMIN));
 	int i, j, k;
 	double eval;
 	GLISTE liste_arc;
 
-	for (i = 0; i < nbre_smt; i++) tab[i] = INF;
-	tab[s]=0;
-
+	for (i = 0; i < nbre_smt; i++)
+	{
+		tab[i].weight = INF;
+	}
+	tab[s].weight = 0;
+	
 	//Algorithme
 	for ( j = 0 ; j < nbre_smt ; j++ )
 	{
 		liste_arc = matrix[j];
 		while (liste_arc)
 		{
-			eval = tab[liste_arc->station_depart] + (liste_arc->cout);
-			if ( eval < tab[liste_arc->station_arrivee] )
+			eval = tab[liste_arc->station_depart].weight + liste_arc->cout;
+			if ( eval < tab[liste_arc->station_arrivee].weight)
 			{
-				tab[liste_arc->station_arrivee] = eval;
+				tab[liste_arc->station_arrivee].weight = eval;
+				tab[liste_arc->station_arrivee].bestdad = liste_arc->station_depart;
 			}
 			liste_arc = liste_arc->suiv;
 		}
