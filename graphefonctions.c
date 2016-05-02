@@ -15,7 +15,7 @@ GRAPHE graphedata(FILE* fichier)
 	return(graphe);
 }
 
-
+//cosntruction de la matrice qui représente les arcs
 GLISTE* build_matrix(FILE* fichier, GRAPHE graphe)
 {
 	int smt_depart=0, smt_arrive, i;
