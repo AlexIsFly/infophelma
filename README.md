@@ -8,6 +8,7 @@ Fait :
 - Test & Debug Bellman
 
 À faire :
-- Optimiser Bellman
 - Récupérer le chemin le plus court
 - Table de hachage pour la correspondance nom de station <-> ID
+- Optimiser Bellman
+- Partie Graphique
