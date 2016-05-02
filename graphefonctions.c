@@ -93,4 +93,31 @@ WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 	return(tab);
 }
 
+void meilleur_chemin(WAY tab, int depart, int arrivee)
+{
+	//utilisation d'un pile pour empiler l'arrivée en premier
+	//et donc dépiler le trajet dans le bon sens
+	PILE chemin;
+	int i = arrivee;
+	while(tab[i].weight != 0)
+	{
+		if (tab[i].weight == INF)
+		{
+			printf("chemin impossible\n");
+			exit(1);
+		}
+		empiler(chemin, tab[i].bestdad);
+		i = tab[i].bestdad;
+	}
+	printf("chemin trouvé\n");
+	visualiser_pile(chemin);
+
+}
+
+
+
+
+
+
+
 
