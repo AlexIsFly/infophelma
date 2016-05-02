@@ -4,9 +4,13 @@
 #include "structure.h"
 #include "liste.h"
 
+//preprocessor macro 
 #define INF 1000000
 
-//récupération des metadata du graphe
+/*
+renvoie une strucuture contenant les metadata du graphe 
+i.e. nombre de sommets et nombre d'arcs
+*/
 GRAPHE graphedata(FILE* fichier)
 {
 	GRAPHE graphe;
@@ -15,7 +19,10 @@ GRAPHE graphedata(FILE* fichier)
 	return(graphe);
 }
 
-//cosntruction de la matrice qui représente les arcs
+/*
+renvoie d'un tableau de liste chainée
+représentaion matricielle des arcs
+*/
 GLISTE* build_matrix(FILE* fichier, GRAPHE graphe)
 {
 	int smt_depart=0, smt_arrive, i;
@@ -37,7 +44,10 @@ GLISTE* build_matrix(FILE* fichier, GRAPHE graphe)
 	return(matrix);
 }
 
-
+/*
+Algorithme de Bellman (non optimisé) qui renvoie une structure 
+contenant le poids final et le meilleur père de chaque sommet.
+*/
 WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 
 
@@ -52,6 +62,7 @@ WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 	for (i = 0; i < nbre_smt; i++)
 	{
 		tab[i].weight = INF;
+		tab[i].bestdad = INF;
 	}
 	tab[s].weight = 0;
 	
