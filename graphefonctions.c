@@ -37,36 +37,45 @@ GLISTE* build_matrix(FILE* fichier, GRAPHE graphe)
 	return(matrix);
 }
 
-void recherche(FILE* fichier, GLISTE* matrix){
+
+double* recherche(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 
 
 	//Initialisation du tableau
-	int tab[nbre_smt]; int i;
-	
+	int nbre_smt = graphe.nombre_sommet;
+	int nbre_arc = graphe.nombre_arc;
+	double* tab = calloc(nbre_smt, sizeof(double));
+	int i, j, k;
+	double eval;
+	GLISTE liste_arc;
+
 	for (i = 0; i < nbre_smt; i++) tab[i] = INF;
-	
 	tab[s]=0;
 
-
 	//Algorithme
-	int j, k; 
-
-	for ( j = 0 ; j < nbre_sommet ; j++ ){
-		GLISTE* arc = matrix[j]
-		while (arc){
-			if tab[arc->station_depart] + (arc->cout) < tab[station_arrivee] {
-				tab[station_arrivee] = tab[station_depart] + (arc->cout);
+	for ( j = 0 ; j < nbre_smt ; j++ )
+	{
+		liste_arc = matrix[j];
+		while (liste_arc)
+		{
+			eval = tab[liste_arc->station_depart] + (liste_arc->cout);
+			if ( eval < tab[liste_arc->station_arrivee] )
+			{
+				tab[liste_arc->station_arrivee] = eval;
 			}
-			arc = arc->suiv;
+			liste_arc = liste_arc->suiv;
 		}
 	}
 	
-	for (k = 1 ; k < nbre_arc ; k++ ){
-		if tab[arc->station_depart] + (arc->cout) < tab[station_arrivee] {
+	/*
+	for (k = 0 ; k < nbre_arc ; k++ ){
+		if ( tab[liste_arc->station_depart] + (liste_arc->cout) < tab[liste_arc->station_arrivee] ) {
 			printf ("Solution impossible");
 			exit(1);
 		}
 	}
+	*/
+	return(tab);
 }
 
 
