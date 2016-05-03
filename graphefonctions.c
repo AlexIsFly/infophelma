@@ -93,6 +93,7 @@ WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 	return(tab);
 }
 
+//fonction affichant le meilleur chemins
 void meilleur_chemin(WAY tab, int depart, int arrivee)
 {
 	//utilisation d'un pile pour empiler l'arrivée en premier
