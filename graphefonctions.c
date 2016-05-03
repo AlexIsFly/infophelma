@@ -20,6 +20,27 @@ GRAPHE graphedata(FILE* fichier)
 }
 
 /*
+Fonction renvoyant une structure contenant les metadata des sommets. 
+*/
+SLISTE sommetdata(FILE* fichier, GRAPHE graphe)
+{
+	char mot[100];
+	int i;
+	SLISTE tab = calloc(graphe.nombre_sommet, sizeof(SOMMET));	
+
+	fgets(mot,511,fichier);
+	fgets(mot,511,fichier);
+
+    for(i=0; i<graphe.nombre_sommet; i++)
+    {
+        fscanf(fichier,"%d %lf %lf %s", &(tab[i].s.id), &(tab[i].s.lat), &(tab[i].s.longi), tab[i].s.ligne);
+    	fgets(tab[i].s.nom_station, 511, fichier);
+   		printf("ID : %d, Lat : %lf, Long : %lf, line : %s, Nom : %s \n", tab[i].s.id, tab[i].s.lat, tab[i].s.longi, tab[i].s.ligne, tab[i].s.nom_station);
+    }
+    return(tab);
+}
+
+/*
 renvoie d'un tableau de liste chainée
 représentaion matricielle des arcs
 */
