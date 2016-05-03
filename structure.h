@@ -5,18 +5,26 @@
 
 
 
+#ifndef _STATION
+#define _STATION
+
+typedef struct sommet {
+	int id;
+	double lat;
+	double longi;
+	char ligne[100];
+	char nom_station[100];
+} STATION;
+
+#endif
+
 #ifndef _SOMMET
 #define _SOMMET
-
 //Definition de X : Sommet
-typedef struct sommet {
-	int numero_station;
-	double latitude;
-	double longitude;
-	char nom_ligne;
-	char nom_station;
-} SOMMET;	 
-
+typedef struct sommet_liste {
+	STATION s;
+	struct sommet * next;
+} SOMMET, *SLISTE;	 
 #endif
 
 #ifndef _ARC
@@ -54,19 +62,6 @@ typedef struct way
 } CHEMIN, *WAY;
 
 #endif
-//Structure pour liste chaînée
-// typedef struct graphe_liste {
-// 	double cout;
-// 	int station_arrivee;
-// 	struct graphe_liste * suiv;
-// } GLISTE;
-
-
-
-
-
-
-
 
 
 
