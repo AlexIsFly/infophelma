@@ -86,22 +86,25 @@ WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 	}
 	tab[s].weight = 0;
 	
+	
 	//Algorithme
-	for ( j = 0 ; j < nbre_smt ; j++ )
+	for (i = 0; i < nbre_smt; i++)
 	{
-		liste_arc = matrix[j];
-		while (liste_arc)
+		for ( j = 0 ; j < nbre_smt ; j++ )
 		{
-			eval = tab[liste_arc->station_depart].weight + liste_arc->cout;
-			if ( eval < tab[liste_arc->station_arrivee].weight)
+			liste_arc = matrix[j];
+			while (liste_arc)
 			{
-				tab[liste_arc->station_arrivee].weight = eval;
-				tab[liste_arc->station_arrivee].bestdad = liste_arc->station_depart;
+				eval = tab[liste_arc->station_depart].weight + liste_arc->cout;
+				if ( eval < tab[liste_arc->station_arrivee].weight)
+				{
+					tab[liste_arc->station_arrivee].weight = eval;
+					tab[liste_arc->station_arrivee].bestdad = liste_arc->station_depart;
+				}
+				liste_arc = liste_arc->suiv;
 			}
-			liste_arc = liste_arc->suiv;
 		}
 	}
-	
 	/*
 	for (k = 0 ; k < nbre_arc ; k++ ){
 		if ( tab[liste_arc->station_depart] + (liste_arc->cout) < tab[liste_arc->station_arrivee] ) {
@@ -115,7 +118,7 @@ WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 
 
 //fonction affichant le meilleur chemins
-void meilleur_chemin(WAY tab, SLISTE stab, int depart, int arrivee)
+int meilleur_chemin(WAY tab, SLISTE stab, int depart, int arrivee)
 {
 	//utilisation d'un pile pour empiler l'arrivée en premier
 	//et donc dépiler le trajet dans le bon sens
@@ -127,13 +130,14 @@ void meilleur_chemin(WAY tab, SLISTE stab, int depart, int arrivee)
 		if (tab[i].weight == INF)
 		{
 			printf("chemin impossible\n");
-			exit(1);
+			return(0);
 		}
 		chemin = ajout_tete_S(stab[tab[i].bestdad], chemin);
 		i = tab[i].bestdad;
 	}
 	printf("chemin trouvé\n");
 	visualiser_liste_chemin(chemin);
+	return(1);
 
 }
 
