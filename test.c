@@ -11,35 +11,33 @@
 int main(void)
 {
 	FILE* fichier;
-    int i;
+    int i, arrivee, depart, again;
 	
 	//Ouverture du fichier avec la permission lecture uniquement
     fichier = fopen ("metro.csv", "r");
     if (!fichier) {
         return EXIT_FAILURE;
     }
+    
     GRAPHE graphe1 = graphedata(fichier);
     SLISTE stab = sommetdata(fichier, graphe1);
-    for (i=0; i<graphe1.nombre_sommet; i++)
-    {
-        printf("Lati %d : %lf\n",i, stab[i].lat);
-        printf("Longi %d : %lf\n",i, stab[i].longi );
-        printf("Name %d : %s",i, stab[i].nom_station);
-        printf("Ligne %d : %s\n",i, stab[i].ligne );
-    }
     GLISTE* mat = build_matrix(fichier, graphe1);
     
-    
+    do {
+    printf("Choisissez une station de depart\n");
+    scanf("%d", &depart);
 
+    WAY wtab = update_smt_weight(fichier, mat, graphe1, depart);
 
-    WAY wtab = update_smt_weight(fichier, mat, graphe1, 43);
-    for (i=0; i<graphe1.nombre_sommet; i++)
-    {
-        printf("Poids Sommet %d : %lf\n",i,wtab[i].weight);
-        printf("Bestdad %d : %d\n",i, wtab[i].bestdad );
+    printf("Choisissez une station d'arrivée\n");
+    scanf("%d", &arrivee);
+
+    meilleur_chemin(wtab, stab, depart ,arrivee);
+
+    printf("Continuer? (1 : Oui -- 0 : Non)\n");
+    scanf("%d", &again);
     }
-    meilleur_chemin(wtab, stab, 43 ,488);
-
+    while(again);
 
     fclose (fichier);
 	return EXIT_SUCCESS;
