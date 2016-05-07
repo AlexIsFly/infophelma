@@ -14,7 +14,7 @@ typedef struct sommet {
 	double longi;
 	char ligne[100];
 	char nom_station[100];
-} STATION;
+} STATION, *SLISTE;
 
 #endif
 
@@ -22,9 +22,9 @@ typedef struct sommet {
 #define _SOMMET
 //Definition de X : Sommet
 typedef struct sommet_liste {
-	STATION s;
-	struct sommet * next;
-} SOMMET, *SLISTE;	 
+	STATION station;
+	struct sommet_liste * suiv;
+} SOMMET, *LISTE;	 
 #endif
 
 #ifndef _ARC

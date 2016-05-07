@@ -26,16 +26,15 @@ SLISTE sommetdata(FILE* fichier, GRAPHE graphe)
 {
 	char mot[100];
 	int i;
-	SLISTE tab = calloc(graphe.nombre_sommet, sizeof(SOMMET));	
+	SLISTE tab = calloc(graphe.nombre_sommet, sizeof(STATION));	
 
 	fgets(mot,511,fichier);
 	fgets(mot,511,fichier);
 
     for(i=0; i<graphe.nombre_sommet; i++)
     {
-        fscanf(fichier,"%d %lf %lf %s", &(tab[i].s.id), &(tab[i].s.lat), &(tab[i].s.longi), tab[i].s.ligne);
-    	fgets(tab[i].s.nom_station, 511, fichier);
-   		printf("ID : %d, Lat : %lf, Long : %lf, line : %s, Nom : %s \n", tab[i].s.id, tab[i].s.lat, tab[i].s.longi, tab[i].s.ligne, tab[i].s.nom_station);
+        fscanf(fichier,"%d %lf %lf %s", &(tab[i].id), &(tab[i].lat), &(tab[i].longi), tab[i].ligne);
+    	fgets(tab[i].nom_station, 511, fichier);
     }
     return(tab);
 }
@@ -60,7 +59,7 @@ GLISTE* build_matrix(FILE* fichier, GRAPHE graphe)
 	for (i=0; i<graphe.nombre_arc; i++)
 	{
 		fscanf(fichier,"%d %d %lf", &(smt_depart), &(smt_arrive), &(cout));
-		matrix[smt_depart] = ajout_tete(smt_depart, smt_arrive, cout, matrix[smt_depart]);
+		matrix[smt_depart] = ajout_tete_G(smt_depart, smt_arrive, cout, matrix[smt_depart]);
 	}
 	return(matrix);
 }
@@ -114,13 +113,15 @@ WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 	return(tab);
 }
 
+
 //fonction affichant le meilleur chemins
-void meilleur_chemin(WAY tab, int depart, int arrivee)
+void meilleur_chemin(WAY tab, SLISTE stab, int depart, int arrivee)
 {
 	//utilisation d'un pile pour empiler l'arrivée en premier
 	//et donc dépiler le trajet dans le bon sens
-	PILE chemin;
+	LISTE chemin = creer_liste();
 	int i = arrivee;
+	chemin = ajout_tete_S(stab[arrivee], chemin);
 	while(tab[i].weight != 0)
 	{
 		if (tab[i].weight == INF)
@@ -128,14 +129,13 @@ void meilleur_chemin(WAY tab, int depart, int arrivee)
 			printf("chemin impossible\n");
 			exit(1);
 		}
-		empiler(chemin, tab[i].bestdad);
+		chemin = ajout_tete_S(stab[tab[i].bestdad], chemin);
 		i = tab[i].bestdad;
 	}
 	printf("chemin trouvé\n");
-	visualiser_pile(chemin);
+	visualiser_liste_chemin(chemin);
 
 }
-
 
 
 
