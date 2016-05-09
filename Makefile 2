@@ -1,0 +1,32 @@
+DIRSDL=/users/prog1a/C/librairie/2011
+
+CFLAGS=-g -I$(DIRSDL)/include -I$(DIRSDL)/include/SDL -I/usr/local/include -I/usr/include/SDL
+LDFLAGS= -L$(DIRSDL)/lib -L/usr/local/lib -lSDL -lSDL_ttf -lSDL_image -lSDL_draw -lSDL_phelma -lX11
+
+all: demo2 demo1 demo3 demo4
+
+demo1: demo1.o 
+	gcc -o demo1 demo1.o $(LDFLAGS)
+
+demo2: demo2.o 
+	gcc -o demo2 demo2.o $(LDFLAGS)
+
+demo3: demo3.o 
+	gcc -o demo3 demo3.o $(LDFLAGS)
+
+demo4: demo4.o 
+	gcc -o demo4 demo4.o $(LDFLAGS)
+
+demo1.o : demo1.c
+	gcc -c $(CFLAGS)  demo1.c
+
+demo2.o : demo2.c
+	gcc -c $(CFLAGS)  demo2.c
+
+demo3.o : demo3.c
+	gcc -c $(CFLAGS)  demo3.c
+
+demo4.o : demo4.c
+	gcc -c $(CFLAGS)  demo4.c
+
+
