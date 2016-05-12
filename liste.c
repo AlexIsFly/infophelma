@@ -5,7 +5,7 @@
 
 
 
-LISTE creer_liste(void) {	return NULL;	}
+SLISTE creer_liste(void) {	return NULL;	}
 
 int est_vide(GLISTE L) {	return !L;	}
 
@@ -20,9 +20,9 @@ GLISTE ajout_tete_G(int station_depart, int station_arrivee, double cout, GLISTE
   return p;
 }
 
-LISTE ajout_tete_S(STATION s, LISTE l1)
+SLISTE ajout_tete_S(STATION s, SLISTE l1)
 {
-	LISTE l2=(LISTE)calloc(1,sizeof(*l2));
+	SLISTE l2=(SLISTE)calloc(1,sizeof(*l2));
  	if (l2==NULL) return NULL; 
 	l2->station = s;
   	l2->suiv = l1;
@@ -46,9 +46,9 @@ void visualiser_liste_arc(GLISTE l)
 	}	
 }
 
-void visualiser_liste_chemin(LISTE l)
+void visualiser_liste_chemin(SLISTE l)
 {
-	LISTE p = l;
+	SLISTE p = l;
 	if (est_vide(l))
 	{
 		printf("La liste est vide\n");

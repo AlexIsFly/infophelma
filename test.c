@@ -20,19 +20,23 @@ int main(void)
     }
     
     GRAPHE graphe1 = graphedata(fichier);
-    SLISTE stab = sommetdata(fichier, graphe1);
+    STAB* tab = sommetdata(fichier, graphe1);
     GLISTE* mat = build_matrix(fichier, graphe1);
     
     do {
     printf("Choisissez une station de depart\n");
     scanf("%d", &depart);
 
-    WAY wtab = update_smt_weight(fichier, mat, graphe1, depart);
+    update_smt_weight(fichier, mat, graphe1, tab, depart);
+    for (i = 0; i < graphe1.nombre_sommet; i++)
+    {
+        printf("Id : %d, lat : %lf, longi : %lf, ligne : %s, nom : %s, bestdad : %d, weight : %lf\n", tab[i]->id, tab[i]->lat, tab[i]->longi, tab[i]->ligne, tab[i]->nom_station, tab[i]->bestdad, tab[i]->weight);
+    }
 
     printf("Choisissez une station d'arrivée\n");
     scanf("%d", &arrivee);
 
-    meilleur_chemin(wtab, stab, depart ,arrivee);
+    meilleur_chemin(tab, depart ,arrivee);
 
     printf("Continuer? (1 : Oui -- 0 : Non)\n");
     scanf("%d", &again);

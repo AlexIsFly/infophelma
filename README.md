@@ -10,6 +10,6 @@ Fait :
 - Visualiser le chemin le plus court
 
 À faire :
-- Table de hachage pour la correspondance nom de station <-> ID
+- Table de hachage pour la correspondance nom de station <-> ID (Guillaume)
 - Optimiser Bellman
 - Partie Graphique

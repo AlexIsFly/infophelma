@@ -22,22 +22,27 @@ GRAPHE graphedata(FILE* fichier)
 /*
 Fonction renvoyant une structure contenant les metadata des sommets. 
 */
-SLISTE sommetdata(FILE* fichier, GRAPHE graphe)
+STAB* sommetdata(FILE* fichier, GRAPHE graphe)
 {
 	char mot[100];
 	int i;
-	SLISTE tab = calloc(graphe.nombre_sommet, sizeof(STATION));	
+	STAB* tab = calloc(graphe.nombre_sommet, sizeof(STAB));
 
 	fgets(mot,511,fichier);
 	fgets(mot,511,fichier);
 
     for(i=0; i<graphe.nombre_sommet; i++)
     {
-        fscanf(fichier,"%d %lf %lf %s", &(tab[i].id), &(tab[i].lat), &(tab[i].longi), tab[i].ligne);
-    	fgets(tab[i].nom_station, 511, fichier);
+    	tab[i] = calloc(1, sizeof(STATION));
+        fscanf(fichier,"%d %lf %lf %s", &(tab[i]->id), &(tab[i]->lat), &(tab[i]->longi), tab[i]->ligne);
+    	fgets(tab[i]->nom_station, 511, fichier);
+    	tab[i]->weight = INF;
+    	tab[i]->bestdad = INF;
+    	printf("Id : %d, lat : %lf, longi : %lf, ligne : %s, nom : %s, bestdad : %d, weight : %lf\n", tab[i]->id, tab[i]->lat, tab[i]->longi, tab[i]->ligne, tab[i]->nom_station, tab[i]->bestdad, tab[i]->weight);
     }
     return(tab);
 }
+
 
 /*
 renvoie d'un tableau de liste chainée
@@ -64,28 +69,25 @@ GLISTE* build_matrix(FILE* fichier, GRAPHE graphe)
 	return(matrix);
 }
 
+
 /*
 Algorithme de Bellman (non optimisé) qui renvoie une structure 
 contenant le poids final et le meilleur père de chaque sommet.
 */
-WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
+
+
+void update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, STAB* tab, int s){
 
 
 	//Initialisation du tableau
 	int nbre_smt = graphe.nombre_sommet;
 	int nbre_arc = graphe.nombre_arc;
-	WAY tab = calloc(nbre_smt, sizeof(CHEMIN));
 	int i, j, k;
 	double eval;
 	GLISTE liste_arc;
 
-	for (i = 0; i < nbre_smt; i++)
-	{
-		tab[i].weight = INF;
-		tab[i].bestdad = INF;
-	}
-	tab[s].weight = 0;
-	
+	tab[s]->weight = 0;
+	printf("cout : %lf\n", tab[s]->weight);
 	
 	//Algorithme
 	for (i = 0; i < nbre_smt; i++)
@@ -95,51 +97,42 @@ WAY update_smt_weight(FILE* fichier, GLISTE* matrix, GRAPHE graphe, int s){
 			liste_arc = matrix[j];
 			while (liste_arc)
 			{
-				eval = tab[liste_arc->station_depart].weight + liste_arc->cout;
-				if ( eval < tab[liste_arc->station_arrivee].weight)
+				eval = tab[liste_arc->station_depart]->weight + liste_arc->cout;
+				if ( eval < tab[liste_arc->station_arrivee]->weight)
 				{
-					tab[liste_arc->station_arrivee].weight = eval;
-					tab[liste_arc->station_arrivee].bestdad = liste_arc->station_depart;
+					tab[liste_arc->station_arrivee]->weight = eval;
+					tab[liste_arc->station_arrivee]->bestdad = liste_arc->station_depart;
 				}
 				liste_arc = liste_arc->suiv;
 			}
 		}
 	}
-	/*
-	for (k = 0 ; k < nbre_arc ; k++ ){
-		if ( tab[liste_arc->station_depart] + (liste_arc->cout) < tab[liste_arc->station_arrivee] ) {
-			printf ("Solution impossible");
-			exit(1);
-		}
-	}
-	*/
-	return(tab);
 }
 
 
 //fonction affichant le meilleur chemins
-int meilleur_chemin(WAY tab, SLISTE stab, int depart, int arrivee)
+int meilleur_chemin(STAB* tab, int depart, int arrivee)
 {
-	//utilisation d'un pile pour empiler l'arrivée en premier
-	//et donc dépiler le trajet dans le bon sens
-	LISTE chemin = creer_liste();
+
+	SLISTE chemin = creer_liste();
 	int i = arrivee;
-	chemin = ajout_tete_S(stab[arrivee], chemin);
-	while(tab[i].weight != 0)
+	chemin = ajout_tete_S(*tab[arrivee], chemin);
+	while(tab[i]->weight != 0)
 	{
-		if (tab[i].weight == INF)
+		if (tab[i]->weight == INF)
 		{
 			printf("chemin impossible\n");
 			return(0);
 		}
-		chemin = ajout_tete_S(stab[tab[i].bestdad], chemin);
-		i = tab[i].bestdad;
+		chemin = ajout_tete_S(*tab[tab[i]->bestdad], chemin);
+		i = tab[i]->bestdad;
 	}
 	printf("chemin trouvé\n");
 	visualiser_liste_chemin(chemin);
 	return(1);
 
 }
+
 
 
 

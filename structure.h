@@ -5,30 +5,24 @@
 
 
 
-#ifndef _STATION
-#define _STATION
+#ifndef _STRUCT
+#define _STRUCT
 
 typedef struct sommet {
 	int id;
+	int bestdad;
+	double weight;
 	double lat;
 	double longi;
 	char ligne[100];
 	char nom_station[100];
-} STATION, *SLISTE;
+} STATION, *STAB;
 
-#endif
-
-#ifndef _SOMMET
-#define _SOMMET
-//Definition de X : Sommet
 typedef struct sommet_liste {
 	STATION station;
 	struct sommet_liste * suiv;
-} SOMMET, *LISTE;	 
-#endif
+} SOMMET, *SLISTE;	 
 
-#ifndef _ARC
-#define _ARC
 
 //Definition de Y : Arc
 typedef struct arc {
@@ -38,28 +32,12 @@ typedef struct arc {
 	struct arc * suiv;
 } ARC, *GLISTE;
 
-#endif
-
-#ifndef _GRAPHE
-#define _GRAPHE
 
 //Definition du Graphe	
 typedef struct graphe {
 	int nombre_sommet;
 	int nombre_arc;
 } GRAPHE;
-
-#endif
-
-
-#ifndef _WAY
-#define _WAY
-
-typedef struct way
-{
-	int bestdad;
-	double weight;
-} CHEMIN, *WAY;
 
 #endif
 
