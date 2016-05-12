@@ -37,12 +37,6 @@ typedef struct arc {
 typedef struct graphe {
 	int nombre_sommet;
 	int nombre_arc;
-} GRAPHE;
+} GRAPHE, *PGRAPHE;
 
 #endif
-
-
-
-
-
-

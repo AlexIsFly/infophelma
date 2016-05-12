@@ -19,7 +19,7 @@ int main(void)
         return EXIT_FAILURE;
     }
     
-    GRAPHE graphe1 = graphedata(fichier);
+    PGRAPHE graphe1 = graphedata(fichier);
     STAB* tab = sommetdata(fichier, graphe1);
     GLISTE* mat = build_matrix(fichier, graphe1);
     
@@ -28,10 +28,6 @@ int main(void)
     scanf("%d", &depart);
 
     update_smt_weight(fichier, mat, graphe1, tab, depart);
-    for (i = 0; i < graphe1.nombre_sommet; i++)
-    {
-        printf("Id : %d, lat : %lf, longi : %lf, ligne : %s, nom : %s, bestdad : %d, weight : %lf\n", tab[i]->id, tab[i]->lat, tab[i]->longi, tab[i]->ligne, tab[i]->nom_station, tab[i]->bestdad, tab[i]->weight);
-    }
 
     printf("Choisissez une station d'arrivée\n");
     scanf("%d", &arrivee);
