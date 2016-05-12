@@ -4,6 +4,8 @@
 
 double MIN(double a, double b);
 double MAX(double a, double b);
+int Xmapping (double longi);
+int Ymapping (double longi);
 
 PGRAPHE graphedata(FILE* fichier);
 STAB* sommetdata(FILE* fichier, PGRAPHE graphe);

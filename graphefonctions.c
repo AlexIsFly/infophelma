@@ -90,8 +90,6 @@ GLISTE* build_matrix(FILE* fichier, PGRAPHE graphe)
 Algorithme de Bellman (non optimisé) qui renvoie une structure 
 contenant le poids final et le meilleur père de chaque sommet.
 */
-
-
 void update_smt_weight(FILE* fichier, GLISTE* matrix, PGRAPHE graphe, STAB* tab, int s){
 
 
@@ -147,6 +145,40 @@ int meilleur_chemin(STAB* tab, int depart, int arrivee)
 	return(1);
 
 }
+
+
+int Xmapping (double longi)
+{
+	double sous = 48.20;
+	double coeff = 1500;
+	int result = (int)((longi-sous)*coeff+0.5);
+	return result;
+}
+
+int Ymapping (double lat)
+{
+	double sous = 2.27;
+	double coeff = 1000;
+	int result = (int)((lat-sous)*coeff+0.5);
+	return result;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

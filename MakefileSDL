@@ -1,0 +1,16 @@
+DIRSDL=/users/prog1a/C/librairie/2011
+
+CFLAGS=-g -c -I$(DIRSDL)/include -I$(DIRSDL)/include/SDL -I/usr/local/include -I/usr/include/SDL
+LDFLAGS= -L$(DIRSDL)/lib -L/usr/local/lib -lSDL -lSDL_ttf -lSDL_image -lSDL_draw -lSDL_phelma -lX11
+
+all: testgraphe1 testSDL
+
+testgraphe1: test.o graphefonctions.o liste.o
+	gcc  -o $@ $^ $(LDFLAGS)
+
+testSDL: test.o graphefonctions.o liste.o
+	gcc  -o $@ $^ $(LDFLAGS)
+
+%.o: %.c
+	gcc $(CFLAGS) $< 
+
