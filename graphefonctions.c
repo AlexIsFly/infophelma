@@ -7,6 +7,17 @@
 //preprocessor macro 
 #define INF 1000000
 
+double MAX(double a, double b)
+{
+	if (a >= b) return(a);
+	else return(b);
+}
+
+double MIN(double a, double b)
+{
+	if (a < b) return(a);
+	else return(b);
+}
 /*
 renvoie une strucuture contenant les metadata du graphe 
 i.e. nombre de sommets et nombre d'arcs
@@ -26,6 +37,7 @@ STAB* sommetdata(FILE* fichier, PGRAPHE graphe)
 {
 	char mot[100];
 	int i;
+	graphe->max_lat=0; graphe->min_lat=INF; graphe->max_longi=0; graphe->min_longi=INF;
 	STAB* tab = calloc(graphe->nombre_sommet, sizeof(STAB));
 
 	fgets(mot,511,fichier);
@@ -36,6 +48,10 @@ STAB* sommetdata(FILE* fichier, PGRAPHE graphe)
     	tab[i] = calloc(1, sizeof(STATION));
         fscanf(fichier,"%d %lf %lf %s", &(tab[i]->id), &(tab[i]->lat), &(tab[i]->longi), tab[i]->ligne);
     	fgets(tab[i]->nom_station, 511, fichier);
+    	graphe->max_lat = MAX(graphe->max_lat, tab[i]->lat);
+    	graphe->max_longi = MAX(graphe->max_longi, tab[i]->longi);
+    	graphe->min_lat = MIN(graphe->min_lat, tab[i]->lat);
+    	graphe->min_longi = MIN(graphe->min_longi, tab[i]->longi);
     	tab[i]->weight = INF;
     	tab[i]->bestdad = INF;
     	// printf("Id : %d, lat : %lf, longi : %lf, ligne : %s, nom : %s, bestdad : %d, weight : %lf\n", tab[i]->id, tab[i]->lat, tab[i]->longi, tab[i]->ligne, tab[i]->nom_station, tab[i]->bestdad, tab[i]->weight);

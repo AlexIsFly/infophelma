@@ -37,6 +37,10 @@ typedef struct arc {
 typedef struct graphe {
 	int nombre_sommet;
 	int nombre_arc;
+	double max_lat;
+	double min_lat;
+	double max_longi;
+	double min_longi;
 } GRAPHE, *PGRAPHE;
 
 #endif

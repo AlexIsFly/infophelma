@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+double MIN(double a, double b);
+double MAX(double a, double b);
+
 PGRAPHE graphedata(FILE* fichier);
 STAB* sommetdata(FILE* fichier, PGRAPHE graphe);
 GLISTE* build_matrix(FILE* fichier, PGRAPHE graphe);
